@@ -22,9 +22,9 @@ class MainActivity : AppCompatActivity() {
 
         vm.addUser(User(0, "COdebot", "Email.com"))
 
-        vm.allUsers.observe(this, Observer {
+        vm.allUsers.observe(this) {
             viewBinding.txtHello.text = it[0].name
-        })
+        }
 
 
     }
