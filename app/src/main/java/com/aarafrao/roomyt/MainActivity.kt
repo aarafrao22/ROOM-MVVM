@@ -5,13 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.aarafrao.roomyt.DB.User
-import com.aarafrao.roomyt.VM.UserViewModel
 import com.aarafrao.roomyt.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var userViewModel: UserViewModel
     private lateinit var viewBinding: ActivityMainBinding
+    private lateinit var vm: VM
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,13 +18,14 @@ class MainActivity : AppCompatActivity() {
         viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
 
+        vm = ViewModelProvider(this)[VM::class.java]
 
-        userViewModel = ViewModelProvider(this)[UserViewModel::class.java]
+        vm.addUser(User(0, "COdebot", "Email.com"))
 
-        userViewModel.addUser(User(1, "Aaraf", "Email.com"))
-        userViewModel.allUsers.observe(this, Observer {
-            viewBinding.txtHello.text = it[it.size-1].email
+        vm.allUsers.observe(this, Observer {
+            viewBinding.txtHello.text = it[0].name
         })
+
 
     }
 }
